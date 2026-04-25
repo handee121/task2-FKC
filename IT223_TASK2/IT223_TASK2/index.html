@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TASK TMCC</title>
+
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #eef2f7, #ffffff);
+        margin: 0;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        font-size: 34px;
+    }
+
+    h2 {
+        color: #2980b9;
+        margin-top: 30px;
+        border-left: 5px solid #3498db;
+        padding-left: 10px;
+    }
+
+    h3 {
+        color: #34495e;
+        font-weight: normal;
+        margin-left: 10px;
+        line-height: 1.6;
+    }
+
+    hr {
+        border: none;
+        height: 2px;
+        background: #3498db;
+        margin: 20px 0;
+    }
+
+    video {
+        display: block;
+        width: 100%;
+        max-width: 900px;
+        margin: 20px auto;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    pre {
+        background: #1e272e;
+        color: #f5f6fa;
+        padding: 15px 20px;
+        border-radius: 10px;
+        overflow-x: auto;
+        margin: 15px 0;
+    }
+
+    code {
+        font-family: Consolas, monospace;
+        font-size: 14px;
+    }
+
+    .answer {
+        color: #e74c3c;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>DEMO: FOREIGN KEY CONSTRAINTS - TASK 2</h1>
+        <p style="text-align: center; font-family: cursive;">BY GOTERA, PIAMONTE, and PAMLIAN</p>
+        <hr>
+
+        <h2>TASKS 1 | PERFORM THE GIVEN TASK</h2>
+
+        <h3>1. Drop The existing table branch. Create the following relations under IT223 database. BNO and SNO are primary keys.</h3>
+        <video controls>
+            <source src="DEMO_VID\1 (1).mp4" type="video/mp4">
+        </video>
+
+        <h3>2. Can you insert record <em>(S3,Jean,300)</em> into STAFF relation?</h3>
+        <h3>- If YES, what is the message?</h3>
+        <h3>- If NO, what is the message? Why it cannot be inserted?</h3>
+        <p class="answer">Yes, "1 row inserted".</p>
+
+        <video controls>
+            <source src="DEMO_VID/2.mp4" type="video/mp4">
+        </video>
+
+        <h3>3. Delete staff S3. Is it successful? Yes/No</h3>
+        <p class="answer">Yes</p>
+
+        <video controls>
+            <source src="DEMO_VID\3.mp4" type="video/mp4">
+        </video>
+
+        <h3>4. Create a FOREIGN KEY in the branch relation</h3>
+        <pre><code>
+        ALTER TABLE staff 
+        ADD CONSTRAINT staff_branch 
+        FOREIGN KEY (bno)
+        REFERENCES branch(bno)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION;
+        </code></pre>
+
+        <video controls>
+            <source src="DEMO_VID\4.mp4" type="video/mp4">
+        </video>
+        <video controls>
+            <source src="DEMO_VID\4continue.mp4" type="video/mp4">
+        </video>
+
+        <h3>5. Can you insert record (S3,Jean,300) into STAFF relation?.</h3>
+        <h3>- If YES, what is the message?</h3>
+        <h3>- If NO, what is the message? Why it cannot be inserted?</h3>
+        <p class="answer">No, 300 is still not a valid branch in BRANCH table.</p>
+
+        <video controls>
+            <source src="DEMO_VID\5 (2).mp4" type="video/mp4">
+        </video>
+
+        <h3>6. Can you update the Branch # of John to 300.</h3>
+        <pre><code>
+        UPDATE staff 
+        SET bno = 300 
+        WHERE sno = 2;
+        </code></pre>
+        <h3>- If YES, what is the message?</h3>
+        <h3>- If NO, what is the message? Why it cannot be updated?</h3>
+        <p class="answer">No, because we are updating a bno in staff that does not exist in branch.</p>
+
+        <video controls>
+            <source src="DEMO_VID\6.mp4" type="video/mp4">
+        </video>
+
+        <h3>7. Insert record (300,Tagum) into BRANCH relation. Is it successful? Yes/No</h3>
+        <p class="answer">Yes</p>
+
+        <video controls>
+            <source src="DEMO_VID\7.mp4" type="video/mp4">
+        </video>
+
+        <h3>8. Can you insert record (S3,Jean,300) into STAFF relation?</h3>
+        <pre><code>
+        INSERT INTO staff 
+        VALUES ('S3','Jean',300);
+        </code></pre>
+        <h3>- If YES, what is the message?</h3>
+        <h3>- If NO, what is the message? Why it cannot be inserted?</h3>
+        <p class="answer">Yes, "1 row inserted".</p>
+
+        <video controls>
+            <source src="DEMO_VID\freecompress-step 8.mp4" type="video/mp4">
+        </video>
+
+        <h3>9. Delete Branch 100 in the BRANCH relation Is it successful? Yes/No</h3>
+        <pre><code>
+        DELETE FROM branch 
+        WHERE bno = 100;
+        </code></pre>
+        <p class="answer">Yes</p>
+
+        <video controls>
+            <source src="DEMO_VID\step 9.mp4" type="video/mp4">
+        </video>
+
+        <h3>10. What happen to the records under STAFF relation?</h3>
+        <p class="answer">All STAFF record  with bno 100 are also deleted.</p>
+
+        <video controls>
+            <source src="DEMO_VID\step 10.mp4" type="video/mp4">
+        </video>
+
+        <h3>11. Drop the FOREIGN KEY of the STAFF relation</h3>
+        <pre><code>
+        ALTER TABLE staff 
+        DROP FOREIGN KEY staff_branch;
+        </code></pre>
+
+        <video controls>
+            <source src="DEMO_VID\step 11 (1).mp4" type="video/mp4">
+        </video>
+
+        <h3>12. Create a new FOREIGN KEY in the STAFF relation</h3>
+        <pre><code>
+        ALTER TABLE staff 
+        ADD CONSTRAINT staff_branch 
+        FOREIGN KEY (bno)
+        REFERENCES branch(bno)
+        ON DELETE NO ACTION 
+        ON UPDATE CASCADE;
+        </code></pre>
+
+        <video controls>
+            <source src="DEMO_VID\step 12 (1).mp4" type="video/mp4">
+        </video>
+
+        <h3>13. Can you delete Panabo branch?</h3>
+        <h3>- If YES, what is the message?</h3>
+        <h3>- If NO, what is the message? Why it cannot be deleted?</h3>
+        <p class="answer">No, cannot delete a parent row: a foreign key constraint fails because STAFF still references the branch.</p>
+
+        <video controls>
+            <source src="DEMO_VID\step13.mp4" type="video/mp4">
+        </video>
+
+        <h3>14. Can you update Panabo branch number from 100 into 500?</h3>
+        <h3>- If YES, what is the message?</h3>
+        <h3>- If NO, what is the message? Why it cannot be updated?</h3>
+        <p class="answer">Yes, "1 row updated".</p>
+
+        <video controls>
+            <source src="DEMO_VID\step 14.mp4" type="video/mp4">
+        </video>
+
+        <h3>15. Examine the STAFF and BRANCH relations what have you observed?</h3>
+        <p class="answer">The STAFF table is connected to the BRANCH table using a foreign key. This means each staff must belong to a valid branch. It also helps control what happens when data is updated or deleted so the data stays correct and consistent.</p>
+
+        <video controls>
+            <source src="DEMO_VID\step 15.mp4" type="video/mp4">
+        </video>
+
+    </div>
+
+</body>
+</html>
